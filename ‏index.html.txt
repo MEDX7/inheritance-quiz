@@ -1,0 +1,80 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار الميراث الشامل</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+        body { font-family: 'Tajawal', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 p-4 min-h-screen">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold text-center text-emerald-800 mb-8">اختبار الميراث الشامل</h1>
+        <div id="quiz-container" class="space-y-6"></div>
+    </div>
+
+    <script>
+        const quizData = [
+            // أسئلة المقالي (أكمل الفراغ)
+            { q: "ينقسم حجب النقصان إلى قسمين رئيسين هما: حجب نقصان سببه الانتقال، وحجب نقصان سببه:", options: ["الازدحام", "الاستحقاق"], answer: "الازدحام", explanation: "حجب النقصان قد يكون بالانتقال (كالانتقال من فرض لأقل) أو بالازدحام (ككثرة الورثة في الفرض الواحد)." },
+            { q: "حجب النقصان هو منع الوارث من نصيبه:", options: ["الأوفر", "الأقل"], answer: "الأوفر", explanation: "أي نقل الوارث من نصيب كبير إلى نصيب أقل (مثل انتقال الزوج من النصف للربع)." },
+            { q: "انتقال الزوج من النصف إلى الربع هو مثال على الانتقال من فرض إلى:", options: ["أقل منه", "أكثر منه"], answer: "أقل منه", explanation: "نقصان النصيب بسبب وجود فرع وارث للزوجة." },
+            { q: "اجتماع الورثة في (....) يعني زيادة السهام على أصل المسألة ونقص نصيبهم.", options: ["العول", "التعصيب"], answer: "العول", explanation: "العول يقلل نصيب الجميع لتغطية السهام الزائدة عن أصل المسألة." },
+            { q: "انتقال الأب من الإرث بالتعصيب إلى الإرث بالفرض عند وجود الفرع الوارث الذكر هو انتقال من تعصيب إلى:", options: ["أقل منه", "أكثر منه"], answer: "أقل منه", explanation: "لأن الفرض (السدس) للأب أقل من التعصيب الذي قد يأخذ فيه كل المال." },
+            { q: "العصبة هم الذين يرثون:", options: ["بلا تقدير", "بتقدير محدد"], answer: "بلا تقدير", explanation: "العصبة يأخذون ما تبقى من التركة بعد أصحاب الفروض." },
+            { q: "ينقسم العصبة إلى ثلاثة أقسام: عصبة بالنفس، وعصبة بالغير، وعصبة:", options: ["مع الغير", "بالأب"], answer: "مع الغير", explanation: "هذا هو التقسيم الشرعي الدقيق للعصبات." },
+            { q: "الدليل على توريث العصبة بالنفس هو قول النبي ﷺ: ألحقوا الفرائض بأهلها فما بقي فهو لأولى:", options: ["رجل", "وارث"], answer: "رجل", explanation: "المقصود بالرجل في الحديث هو الذكر الوارث القريب للميت." },
+            { q: "عند اجتماع عاصبين واتحادهما في الجهة والدرجة، يُقدم الأقوى:", options: ["من الميت", "في القرابة"], answer: "من الميت", explanation: "قاعدة توريث العصبات هي القرب من الميت." },
+            { q: "جهة (....) تشمل الأعمام الأشقاء والأعمام لأب وإن علوا وبنوهم وإن نزلوا.", options: ["العمومة", "الأخوة"], answer: "العمومة", explanation: "جهة العمومة تأتي في ترتيب العصبات بعد جهة الأخوة." },
+            
+            // أسئلة الصح والخطأ
+            { q: "يرث الأخ لأم السدس بشرط عدم الأصل الوارث الذكر وعدم الفرع الوارث.", options: ["صح", "خطأ"], answer: "صح", explanation: "هذه شروط استحقاق الإخوة لأم للفرض." },
+            { q: "إذا اجتمع الإخوة لأم (ذكور وإناث) فإن للذكر ضعف نصيب الأنثى.", options: ["صح", "خطأ"], answer: "خطأ", explanation: "في الإخوة لأم يستوي الذكر والأنثى في النصيب (للذكر مثل الأنثى)." },
+            { q: "الإخوة لأم يُدلون إلى الميت بأنثى (الأم) ومع ذلك يرثون.", options: ["صح", "خطأ"], answer: "صح", explanation: "هم استثناء من القاعدة التي تقول: كل من أدلى بأنثى لا يرث." },
+            { q: "الجد لا يحجب الإخوة لأم من الميراث.", options: ["صح", "خطأ"], answer: "صح", explanation: "اتفق العلماء على أن الإخوة لأم يرثون مع وجود الجد." },
+            { q: "وجود الإخوة لأم ينقص نصيب الأم من الثلث إلى السدس وإن كانوا محجوبين.", options: ["صح", "خطأ"], answer: "صح", explanation: "وجود عدد من الإخوة ولو محجوبين كافٍ لنقل الأم من الثلث إلى السدس." },
+            { q: "الحجب اصطلاحاً هو منع من قام به سبب الإرث من إرثه أو من أوفر حظيه.", options: ["صح", "خطأ"], answer: "صح", explanation: "هذا هو التعريف الشرعي الشامل للحجب." },
+            { q: "معرفة باب الحجب ليست ضرورية لإيصال الحقوق لمستحقيها.", options: ["صح", "خطأ"], answer: "خطأ", explanation: "معرفة الحجب من أهم ركائز علم الميراث لتحديد من يرث ومن لا يرث." },
+            { q: "حجب الأشخاص هو أن يتصف الوارث بمانع من موانع الإرث كالقتل أو اختلاف الدين.", options: ["صح", "خطأ"], answer: "خطأ", explanation: "هذا تعريف (حجب الوصف)، أما حجب الأشخاص فهو منع شخص لوجود شخص آخر." },
+            { q: "المحجوب بالوصف وجوده كعدمه، فلا يرث ولا يحجب غيره من الإرث.", options: ["صح", "خطأ"], answer: "صح", explanation: "لأن الوصف المانع (كالقتل) يمنع الأثر الشرعي للإرث." },
+            { q: "قال بعض العلماء: لا يحل لمن لا يعرف باب الحجب أن يفتي في الفرائض.", options: ["صح", "خطأ"], answer: "صح", explanation: "لأن الجهل بالحجب يؤدي لتوريث من لا يستحق أو حرمان من يستحق." },
+            { q: "ينقسم حجب الأشخاص إلى نوعين هما: حجب الحرمان وحجب النقصان.", options: ["صح", "خطأ"], answer: "صح", explanation: "هذا هو التقسيم الأساسي لحجب الأشخاص." },
+            { q: "الوالدان (الأب والأم) يمكن أن يُحجبا حجب حرمان إذا وجد الفرع الوارث.", options: ["صح", "خطأ"], answer: "خطأ", explanation: "الوالدان من أصحاب الفروض الذين لا يحجبون حجب حرمان أبداً." },
+            { q: "الجد يُحجب حجب حرمان بالأب.", options: ["صح", "خطأ"], answer: "صح", explanation: "الأب أقرب درجة للميت من الجد فيحجبه حجب حرمان." },
+            { q: "الابن يحجب ابن الابن، وابن الابن يحجب ابن ابن الابن.", options: ["صح", "خطأ"], answer: "صح", explanation: "قاعدة الحجب: القريب يحجب البعيد." },
+            { q: "الجدة (أم الأم) تُحجب بالأم.", options: ["صح", "خطأ"], answer: "صح", explanation: "كل جدة تدلي بالأم تُحجب بوجود الأم." }
+        ];
+
+        const container = document.getElementById('quiz-container');
+        quizData.forEach((item, index) => {
+            const div = document.createElement('div');
+            div.className = "bg-white p-6 rounded-2xl shadow-sm border border-slate-200";
+            div.innerHTML = `<p class="font-bold text-lg text-slate-800 mb-4">${index + 1}. ${item.q}</p>`;
+            const optionsDiv = document.createElement('div');
+            item.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-right p-3 mb-2 rounded-lg border hover:bg-emerald-50 transition";
+                btn.textContent = opt;
+                btn.onclick = () => {
+                    const isCorrect = opt === item.answer;
+                    btn.className = `w-full text-right p-3 mb-2 rounded-lg border ${isCorrect ? 'bg-green-100 border-green-500' : 'bg-red-100 border-red-500'}`;
+                    const expl = document.createElement('div');
+                    expl.className = "mt-3 p-3 bg-slate-100 rounded-lg text-slate-700 italic text-sm";
+                    expl.innerHTML = `<strong>التفسير:</strong> ${item.explanation}`;
+                    btn.parentElement.appendChild(expl);
+                    optionsDiv.querySelectorAll('button').forEach(b => b.disabled = true);
+                };
+                optionsDiv.appendChild(btn);
+            });
+            div.appendChild(optionsDiv);
+            container.appendChild(div);
+        });
+    </script>
+</body>
+</html>
+
+```
